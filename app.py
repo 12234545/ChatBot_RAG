@@ -11,6 +11,9 @@ from langchain_groq import ChatGroq
 
 import gradio as gr
 
+from langchain_core.documents import Document
+from paddleocr import PaddleOCR
+
 
 pdf_path = "pdf/RP.pdf"  
 loader = PyPDFLoader(pdf_path)
@@ -32,7 +35,7 @@ base_retriever = vectorstore.as_retriever(search_kwargs={"k": 8})
 
 
 llm_compression = ChatGroq(
-    api_key="votre-cle_api",
+    api_key="votre_clé_api",
     model="llama-3.3-70b-versatile"
 )
 compressor_llm = LLMChainExtractor.from_llm(llm_compression)
@@ -59,7 +62,7 @@ rag_prompt = ChatPromptTemplate.from_template(rag_template)
 
 llm_response = ChatGroq(
     temperature=0,
-    api_key="votre-cle_api",
+    api_key="votre_clé_api",
     model="llama-3.3-70b-versatile"
 )
 
@@ -82,7 +85,28 @@ def generate_response(user_message):
     memory.save_context({"input": user_message}, {"output": response})
     return response
 
+##################OCRPADDEL#######################
 
+ocr = PaddleOCR(use_angle_cls=True, lang='fr')  
+results = ocr.ocr("image/img2.jpg", cls=True)
+
+text_from_image = ""
+if results and results[0] is not None:
+    for line in results[0]:
+        text_line = line[1][0]  
+        text_from_image += text_line + "\n"
+else:
+    print("Aucun texte détecté dans l'image.")
+
+doc_from_image = Document(page_content=text_from_image)
+
+
+image_chunks = text_splitter.split_documents([doc_from_image])
+
+
+vectorstore.add_texts([chunk.page_content for chunk in image_chunks])
+
+##########################
 with gr.Blocks() as demo:
     gr.Markdown("## Consultant en éducation au Maroc")
     chatbot = gr.Chatbot()
