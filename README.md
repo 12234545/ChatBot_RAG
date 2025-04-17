@@ -9,6 +9,7 @@ Application Gradio de question/réponse (RAG) spécialisée dans l’enseignemen
 ## <h2>⚙️ Fonctionnalités</h2>
 
 - Lecture automatique d’un fichier PDF
+- Extraire le texte depuis les images <strong>via OCRPADDEL</strong>
 - Découpage du contenu et génération d’embeddings
 - Recherche contextuelle avec LangChain
 - Résumés compressés via Groq LLM
@@ -21,6 +22,7 @@ Application Gradio de question/réponse (RAG) spécialisée dans l’enseignemen
 - `app.py` : le script principal de l'application
 - `requirements.txt` : liste des dépendances
 - `pdf/RP.pdf` : le fichier PDF à analyser (à ajouter)
+- `image` : le fichier qui contient les images 
 
 ---
 
