@@ -9,7 +9,7 @@ Application Gradio de question/réponse (RAG) spécialisée dans l’enseignemen
 ## <h2>⚙️ Fonctionnalités</h2>
 
 - Lecture automatique d’un fichier PDF
-- Extraire le texte depuis les images <strong>via OCRPADDEL</strong>
+- Extraire le texte depuis les images via <strong> PaddleOCR</strong>
 - Découpage du contenu et génération d’embeddings
 - Recherche contextuelle avec LangChain
 - Résumés compressés via Groq LLM
